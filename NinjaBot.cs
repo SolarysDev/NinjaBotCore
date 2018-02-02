@@ -65,6 +65,7 @@ namespace NinjaBotCore
                 .AddSingleton<RlStatsApi>()
                 .AddSingleton<UserInteraction>()
                 .AddSingleton<CommandHandler>()
+                .AddLogging()
                 .AddSingleton<StartupService>()
                 .AddSingleton<SteamApi>()        
                 .AddSingleton<GiphyApi>()    
@@ -79,21 +80,23 @@ namespace NinjaBotCore
             serviceProvider.GetRequiredService<CommandHandler>();
             
             //Instantiate services    
-            serviceProvider.GetRequiredService<LoggingService>();        
+            serviceProvider.GetRequiredService<LoggingService>();       
             serviceProvider.GetRequiredService<UserInteraction>();              
             serviceProvider.GetRequiredService<AwayCommands>();
-            serviceProvider.GetRequiredService<WowApi>();
-            serviceProvider.GetRequiredService<WarcraftLogs>();
-            serviceProvider.GetRequiredService<RlStatsApi>();                        
-            serviceProvider.GetRequiredService<OxfordApi>();
-            serviceProvider.GetRequiredService<ChannelCheck>();
-            serviceProvider.GetRequiredService<RocketLeague>();
-            serviceProvider.GetRequiredService<SteamApi>();
-            serviceProvider.GetRequiredService<GiphyApi>();
-            serviceProvider.GetRequiredService<WeatherApi>();
-            serviceProvider.GetRequiredService<YouTubeApi>();
+            //serviceProvider.GetRequiredService<WowApi>();
+            //serviceProvider.GetRequiredService<WarcraftLogs>();
+            //serviceProvider.GetRequiredService<RlStatsApi>();                        
+            //serviceProvider.GetRequiredService<OxfordApi>();
+            //serviceProvider.GetRequiredService<ChannelCheck>();
+            //serviceProvider.GetRequiredService<RocketLeague>();
+            //serviceProvider.GetRequiredService<SteamApi>();
+            //serviceProvider.GetRequiredService<GiphyApi>();
+            //serviceProvider.GetRequiredService<WeatherApi>();
+            //serviceProvider.GetRequiredService<YouTubeApi>();
 
-            serviceProvider.GetRequiredService<DiscordSocketClient>().Log += Log;
+            //var logger = serviceProvider.GetRequiredService<LoggingService>();
+            //logger.DoAction("test for the Ninja");
+            //serviceProvider.GetRequiredService<DiscordSocketClient>().Log += Log;
             //_client.Log += Log;            
             //await _client.LoginAsync(TokenType.Bot, Config.Token);
             //await _client.StartAsync();

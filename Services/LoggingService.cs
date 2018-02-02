@@ -4,6 +4,8 @@ using Discord.WebSocket;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using NLog.Extensions.Logging;
 
 namespace NinjaBotCore.Services
 {
@@ -11,24 +13,45 @@ namespace NinjaBotCore.Services
     {
         private readonly DiscordSocketClient _discord;
         private readonly CommandService _commands;
+        private readonly ILoggerFactory _loggerFactory;
+        private readonly ILogger _discordLogger;
+        private readonly ILogger _commandsLogger;
+        private readonly ILogger _ninjaLogger;
 
         private string _logDirectory { get; }
         private string _logFile;
         
         // DiscordSocketClient and CommandService are injected automatically from the IServiceProvider
-        public LoggingService(DiscordSocketClient discord, CommandService commands)
+        public LoggingService(DiscordSocketClient discord, CommandService commands, ILoggerFactory factory)
         {
             _logDirectory = Path.Combine(AppContext.BaseDirectory, "logs");
             
             _discord = discord;
-            _commands = commands;
-            
+            _commands = commands;            
+
+            //_loggerFactory = FactoryConfig(factory);
+
+            //_ninjaLogger = ninjaLogger;
+
             _discord.Log += OnLogAsync;
             _commands.Log += OnLogAsync;
 
             CreateLogFile();
         }
         
+
+        private ILoggerFactory FactoryConfig(ILoggerFactory factory)
+        {
+            factory.AddNLog(new NLogProviderOptions { CaptureMessageTemplates = true, CaptureMessageProperties =true });
+            factory.ConfigureNLog("nlog.config"); 
+            return factory;
+        }
+
+        public void DoAction(string name)
+        {
+            _ninjaLogger.LogDebug(20, "Doing hard work! {Action}", name);
+        }
+
         private void CreateLogFile()
         {
             string logFile = string.Empty;
